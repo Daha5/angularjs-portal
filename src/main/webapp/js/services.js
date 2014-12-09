@@ -6,10 +6,9 @@ var app = angular.module('portal.misc.service', []);
 app.factory('miscService', function($http, $modal, $window, $location) {
   
   var redirectUser = function(status, caller) {
-  	if(status === 0 || status === 302) {
-  		//got a redirect call from shib due to session timeout or /web direct hit
-  		console.log("redirect happening");
-    	console.log(status);
+  	if(status === 0 || status === 302 || status === 404) {
+  		//got a redirect call from shib due to session timeout or /web direct hit or not properly portal authenticated
+  		console.log("redirect happening due to weird return status: " + status);
     	$('body').append("<form id='redirectForm' action='/portal/Login'><input type='hidden' name='profile' value='bucky'/></form>");
     	$('#redirectForm').submit();
     } else {
